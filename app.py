@@ -19,7 +19,7 @@ SOUNDS = [
         "tag": "Sonnerie · Électro",
         "desc": "Un beat électrique et hypnotique. Idéal pour marquer chaque notification d'une touche unique.",
         "price": "0,99 €",
-        "paypal": "https://paypal.me/DavidMarchal/0.99",
+        "paypal": "https://paypal.me/DavidMarchal144/0.99",
     },
     {
         "id": "fm",
@@ -28,7 +28,7 @@ SOUNDS = [
         "tag": "Sonnerie · Onde",
         "desc": "Des fréquences modulées, comme un signal capté à l'aube. Chaleureux et distinctif.",
         "price": "0,99 €",
-        "paypal": "https://paypal.me/DavidMarchal/0.99",
+        "paypal": "https://paypal.me/DavidMarchal144/0.99",
     },
     {
         "id": "hamme",
@@ -37,7 +37,7 @@ SOUNDS = [
         "tag": "Sonnerie · Impact",
         "desc": "Une frappe nette et affirmée. Pour ne jamais manquer un appel important.",
         "price": "0,99 €",
-        "paypal": "https://paypal.me/DavidMarchal/0.99",
+        "paypal": "https://paypal.me/DavidMarchal144/0.99",
     },
     {
         "id": "playafm",
@@ -46,7 +46,7 @@ SOUNDS = [
         "tag": "Sonnerie · Groove",
         "desc": "Un groove solaire, parfait pour les appels qui arrivent comme une bonne nouvelle.",
         "price": "0,99 €",
-        "paypal": "https://paypal.me/DavidMarchal/0.99",
+        "paypal": "https://paypal.me/DavidMarchal144/0.99",
     },
     {
         "id": "wtf",
@@ -55,25 +55,25 @@ SOUNDS = [
         "tag": "Sonnerie · Surprise",
         "desc": "Le son qui fait lever la tête. Pour les appels qui changent tout.",
         "price": "0,99 €",
-        "paypal": "https://paypal.me/DavidMarchal/0.99",
+        "paypal": "https://paypal.me/DavidMarchal144/0.99",
     },
     {
         "id": "assez_travaille",
-        "filename": "filename": "Assez Travaillé (Remastered).mp3",
+        "filename": "filename": "assez travaille Remastered.mp3",
         "title": "Assez Travaillé",
         "tag": "Sonnerie · Remastered",
         "desc": "Une composition ciselée note après note. Le résultat d'heures passées à équilibrer chaque détail.",
         "price": "0,99 €",
-        "paypal": "https://paypal.me/DavidMarchal/0.99",
+        "paypal": "https://paypal.me/DavidMarchal144/0.99",
     },
     {
         "id": "changeffect",
-        "filename": "filename": "ChangEffect (Remastered x4).mp3",
+        "filename": "filename": "changeffect Remastered.mp3",
         "title": "ChangEffect",
         "tag": "Sonnerie · Effet x4",
         "desc": "Un effet sonore distinctif, remastérisé quatre fois pour une texture parfaite.",
         "price": "0,99 €",
-        "paypal": "https://paypal.me/DavidMarchal/0.99",
+        "paypal": "https://paypal.me/DavidMarchal144/0.99",
     },
 ]
 
