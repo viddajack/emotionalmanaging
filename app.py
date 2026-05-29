@@ -59,7 +59,7 @@ SOUNDS = [
     },
     {
         "id": "assez_travaille",
-        "filename": "filename": "assez travaille Remastered.mp3",
+        "filename": "assez travaille Remastered.mp3",
         "title": "Assez Travaillé",
         "tag": "Sonnerie · Remastered",
         "desc": "Une composition ciselée note après note. Le résultat d'heures passées à équilibrer chaque détail.",
@@ -68,7 +68,7 @@ SOUNDS = [
     },
     {
         "id": "changeffect",
-        "filename": "filename": "changeffect Remastered.mp3",
+        "filename": "changeffect Remastered.mp3",
         "title": "ChangEffect",
         "tag": "Sonnerie · Effet x4",
         "desc": "Un effet sonore distinctif, remastérisé quatre fois pour une texture parfaite.",
