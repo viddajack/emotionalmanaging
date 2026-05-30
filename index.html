@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EmotionalManaging · Sonneries par David Marchal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --card: #16161f;
+      --accent: #c8f04a;
+      --accent2: #7b61ff;
+      --text: #f0f0f0;
+      --muted: #888;
+      --border: rgba(255,255,255,0.07);
+      --glow: 0 0 40px rgba(200,240,74,0.15);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      padding: 80px 24px 60px;
+      text-align: center;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(123,97,255,0.18) 0%, transparent 70%);
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 40px,
+        rgba(255,255,255,0.015) 40px, rgba(255,255,255,0.015) 41px
+      );
+      pointer-events: none;
+    }
+    .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(52px, 12vw, 110px);
+      letter-spacing: 4px;
+      line-height: 0.9;
+      background: linear-gradient(135deg, var(--accent) 0%, #fff 50%, var(--accent2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: fadeUp 0.8s ease both;
+    }
+    .tagline {
+      margin-top: 18px;
+      font-size: 14px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      animation: fadeUp 0.8s 0.15s ease both;
+    }
+    .hero-sub {
+      margin-top: 12px;
+      font-size: 16px;
+      color: rgba(255,255,255,0.5);
+      max-width: 480px;
+      margin-inline: auto;
+      line-height: 1.6;
+      animation: fadeUp 0.8s 0.3s ease both;
+    }
+
+    /* NOW PLAYING BAR */
+    .now-playing {
+      display: none;
+      align-items: center;
+      gap: 14px;
+      background: rgba(200,240,74,0.08);
+      border: 1px solid rgba(200,240,74,0.2);
+      border-radius: 50px;
+      padding: 10px 20px;
+      margin: 24px auto 0;
+      max-width: 380px;
+      animation: fadeUp 0.4s ease both;
+    }
+    .now-playing.active { display: flex; }
+    .np-dot {
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 1.2s infinite;
+      flex-shrink: 0;
+    }
+    .np-label { font-size: 13px; color: var(--accent); font-weight: 500; }
+    .np-title { font-size: 13px; color: rgba(255,255,255,0.7); }
+
+    /* GRID */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      max-width: 1100px;
+      margin: 48px auto;
+      padding: 0 20px 60px;
+    }
+
+    /* CARD */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+      animation: fadeUp 0.6s ease both;
+      cursor: default;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(200,240,74,0.25);
+      box-shadow: var(--glow);
+    }
+    .card.playing {
+      border-color: var(--accent);
+      box-shadow: 0 0 30px rgba(200,240,74,0.2);
+    }
+    .card.ai-highlight {
+      border-color: var(--accent2);
+      box-shadow: 0 0 30px rgba(123,97,255,0.3);
+      animation: aiPulse 2s ease-in-out 3;
+    }
+
+    .card-tag {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent2);
+      font-weight: 500;
+    }
+    .card-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 36px;
+      letter-spacing: 2px;
+      line-height: 1;
+    }
+    .card-desc {
+      font-size: 13.5px;
+      color: var(--muted);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    /* WAVEFORM */
+    .waveform {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      height: 28px;
+    }
+    .bar {
+      width: 3px;
+      border-radius: 2px;
+      background: rgba(255,255,255,0.12);
+      transition: background 0.3s;
+    }
+    .card.playing .bar {
+      background: var(--accent);
+      animation: wave var(--dur) ease-in-out infinite alternate;
+    }
+
+    /* CONTROLS */
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-play {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: none;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: transform 0.15s, background 0.2s;
+    }
+    .btn-play:hover { transform: scale(1.08); }
+    .card.playing .btn-play { background: #fff; }
+    .btn-play svg { width: 16px; height: 16px; fill: #0a0a0f; }
+
+    .price-badge {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      color: var(--text);
+      letter-spacing: 1px;
+    }
+
+    .btn-buy {
+      margin-left: auto;
+      padding: 8px 18px;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 50px;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, border-color 0.2s;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .btn-buy:hover {
+      background: rgba(200,240,74,0.1);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* ── AI CHAT WIDGET ── */
+    #ai-widget {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 12px;
+    }
+
+    #ai-bubble {
+      width: 54px; height: 54px;
+      border-radius: 50%;
+      background: var(--accent2);
+      border: none;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 24px rgba(123,97,255,0.5);
+      transition: transform 0.2s, box-shadow 0.2s;
+      flex-shrink: 0;
+    }
+    #ai-bubble:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 32px rgba(123,97,255,0.7);
+    }
+    #ai-bubble svg { width: 24px; height: 24px; fill: #fff; }
+    #ai-bubble .notif {
+      position: absolute;
+      top: -2px; right: -2px;
+      width: 12px; height: 12px;
+      background: var(--accent);
+      border-radius: 50%;
+      border: 2px solid var(--bg);
+    }
+
+    #ai-panel {
+      display: none;
+      flex-direction: column;
+      width: 320px;
+      max-height: 460px;
+      background: #1a1a26;
+      border: 1px solid rgba(123,97,255,0.3);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+      animation: slideUp 0.25s ease;
+    }
+    #ai-panel.open { display: flex; }
+
+    .ai-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 16px;
+      background: rgba(123,97,255,0.15);
+      border-bottom: 1px solid rgba(123,97,255,0.2);
+    }
+    .ai-avatar {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--accent2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .ai-header-text { flex: 1; }
+    .ai-header-name { font-size: 13px; font-weight: 500; color: var(--text); }
+    .ai-header-status { font-size: 11px; color: var(--accent); }
+    .ai-close {
+      background: none; border: none; color: var(--muted);
+      cursor: pointer; font-size: 18px; line-height: 1;
+      padding: 0 2px;
+    }
+    .ai-close:hover { color: var(--text); }
+
+    #ai-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,255,255,0.1) transparent;
+    }
+
+    .msg {
+      max-width: 85%;
+      padding: 9px 13px;
+      border-radius: 14px;
+      font-size: 13px;
+      line-height: 1.5;
+      animation: fadeUp 0.2s ease;
+    }
+    .msg.bot {
+      background: rgba(123,97,255,0.18);
+      border: 1px solid rgba(123,97,255,0.25);
+      color: var(--text);
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+    }
+    .msg.user {
+      background: rgba(200,240,74,0.12);
+      border: 1px solid rgba(200,240,74,0.2);
+      color: var(--accent);
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+    }
+    .msg.typing {
+      background: rgba(123,97,255,0.1);
+      border: 1px solid rgba(123,97,255,0.15);
+      align-self: flex-start;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    .ai-suggest {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 5px 12px;
+      background: rgba(123,97,255,0.2);
+      border: 1px solid rgba(123,97,255,0.4);
+      border-radius: 50px;
+      font-size: 11px;
+      color: #a89dff;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .ai-suggest:hover { background: rgba(123,97,255,0.35); }
+
+    .ai-input-row {
+      display: flex;
+      gap: 8px;
+      padding: 12px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    #ai-input {
+      flex: 1;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 50px;
+      padding: 9px 14px;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    #ai-input:focus { border-color: rgba(123,97,255,0.5); }
+    #ai-input::placeholder { color: var(--muted); }
+    #ai-send {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--accent2);
+      border: none;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: transform 0.15s;
+    }
+    #ai-send:hover { transform: scale(1.1); }
+    #ai-send svg { width: 16px; height: 16px; fill: #fff; }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 32px 20px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 13px;
+    }
+    footer a { color: var(--accent2); text-decoration: none; }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    @keyframes wave {
+      from { transform: scaleY(0.3); }
+      to   { transform: scaleY(1); }
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes aiPulse {
+      0%, 100% { box-shadow: 0 0 30px rgba(123,97,255,0.3); }
+      50%       { box-shadow: 0 0 50px rgba(123,97,255,0.7); }
+    }
+
+    {% for s in sounds %}
+    .card:nth-child({{ loop.index }}) { animation-delay: {{ (loop.index0 * 0.07)|round(2) }}s; }
+    {% endfor %}
+  </style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="logo">Emotional<br>Managing</div>
+  <p class="tagline">Sonneries originales · par David Marchal</p>
+  <p class="hero-sub">Des sons travaillés, remasterisés, pensés pour sortir du lot. Appuyez play, écoutez, achetez.</p>
+  <div class="now-playing" id="nowPlaying">
+    <span class="np-dot"></span>
+    <span class="np-label">En lecture ·</span>
+    <span class="np-title" id="npTitle">—</span>
+  </div>
+</section>
+
+<div class="grid">
+  {% for s in sounds %}
+  <div class="card" id="card-{{ s.id }}" data-id="{{ s.id }}">
+    <span class="card-tag">{{ s.tag }}</span>
+    <h2 class="card-title">{{ s.title }}</h2>
+    <p class="card-desc">{{ s.desc }}</p>
+
+    <div class="waveform" id="wave-{{ s.id }}">
+      {% for i in range(18) %}
+      <div class="bar" style="height: {{ [8,14,20,26,22,16,10,24,18,12,28,16,20,10,24,14,18,22][i] }}px; --dur: {{ (0.4 + i * 0.07)|round(2) }}s;"></div>
+      {% endfor %}
+    </div>
+
+    <div class="controls">
+      <button class="btn-play" onclick="togglePlay('{{ s.id }}', '{{ s.url }}', '{{ s.title }}')" aria-label="Lecture {{ s.title }}">
+        <svg id="icon-{{ s.id }}" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+      <span class="price-badge">{{ s.price }}</span>
+      <a class="btn-buy" href="{{ s.paypal }}" target="_blank" rel="noopener">
+        💳 Acheter
+      </a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<footer>
+  <p>© 2026 David Marchal · <a href="mailto:davidmarchal144@gmail.com">davidmarchal144@gmail.com</a></p>
+  <p style="margin-top:6px;">EmotionalManaging — Musique &amp; Bien-être</p>
+</footer>
+
+<audio id="player" preload="none"></audio>
+
+<!-- ── AI WIDGET ── -->
+<div id="ai-widget">
+  <div id="ai-panel">
+    <div class="ai-header">
+      <div class="ai-avatar">🎵</div>
+      <div class="ai-header-text">
+        <div class="ai-header-name">Assistant EM</div>
+        <div class="ai-header-status">● En ligne</div>
+      </div>
+      <button class="ai-close" onclick="toggleChat()" aria-label="Fermer">×</button>
+    </div>
+    <div id="ai-messages"></div>
+    <div class="ai-input-row">
+      <input id="ai-input" type="text" placeholder="Quelle ambiance tu cherches ?" maxlength="200"
+        onkeydown="if(event.key==='Enter') sendMsg()" />
+      <button id="ai-send" onclick="sendMsg()" aria-label="Envoyer">
+        <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <button id="ai-bubble" onclick="toggleChat()" aria-label="Assistant IA">
+    <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+    <span class="notif"></span>
+  </button>
+</div>
+
+<script>
+  /* ── PLAYER ── */
+  const player = document.getElementById('player');
+  let currentId = null;
+  const PAUSE_ICON = `<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>`;
+  const PLAY_ICON  = `<path d="M8 5v14l11-7z"/>`;
+
+  function togglePlay(id, url, title) {
+    if (currentId === id) {
+      if (player.paused) { player.play(); setPlaying(id, title); }
+      else {
+        player.pause();
+        setIcon(id, PLAY_ICON);
+        document.getElementById('card-' + id).classList.remove('playing');
+        document.getElementById('nowPlaying').classList.remove('active');
+      }
+      return;
+    }
+    if (currentId) stopCurrent();
+    currentId = id;
+    player.src = url;
+    player.play().then(() => setPlaying(id, title))
+      .catch(e => alert('⚠️ Son introuvable sur R2. Vérifiez que "' + url.split('/').pop() + '" est bien uploadé.'));
+  }
+
+  function setPlaying(id, title) {
+    document.getElementById('card-' + id).classList.add('playing');
+    setIcon(id, PAUSE_ICON);
+    document.getElementById('npTitle').textContent = title;
+    document.getElementById('nowPlaying').classList.add('active');
+  }
+
+  function stopCurrent() {
+    if (!currentId) return;
+    player.pause();
+    document.getElementById('card-' + currentId)?.classList.remove('playing');
+    setIcon(currentId, PLAY_ICON);
+    currentId = null;
+    document.getElementById('nowPlaying').classList.remove('active');
+  }
+
+  function setIcon(id, path) {
+    const el = document.getElementById('icon-' + id);
+    if (el) el.innerHTML = path;
+  }
+
+  player.addEventListener('ended', () => {
+    if (currentId) {
+      document.getElementById('card-' + currentId)?.classList.remove('playing');
+      setIcon(currentId, PLAY_ICON);
+      currentId = null;
+      document.getElementById('nowPlaying').classList.remove('active');
+    }
+  });
+
+  /* ── AI CHAT ── */
+  const panel      = document.getElementById('ai-panel');
+  const messagesEl = document.getElementById('ai-messages');
+  const inputEl    = document.getElementById('ai-input');
+  let chatHistory  = [];
+  let chatOpened   = false;
+
+  function toggleChat() {
+    const isOpen = panel.classList.toggle('open');
+    document.querySelector('#ai-bubble .notif').style.display = 'none';
+    if (isOpen && !chatOpened) {
+      chatOpened = true;
+      // Message de bienvenue
+      setTimeout(() => addBotMessage(
+        "Salut ! Je suis là pour t'aider à trouver la sonnerie parfaite. C'est pour quel usage — appels, notifs, réveil ?",
+        null,
+        ["Appels entrants", "Notifications", "Ambiance électro", "Quelque chose d'unique"]
+      ), 300);
+    }
+  }
+
+  function addBotMessage(text, recommendId, suggestions) {
+    const div = document.createElement('div');
+    div.className = 'msg bot';
+    div.textContent = text;
+
+    if (suggestions) {
+      suggestions.forEach(s => {
+        const chip = document.createElement('span');
+        chip.className = 'ai-suggest';
+        chip.textContent = s;
+        chip.onclick = () => sendMsg(s);
+        div.appendChild(document.createElement('br'));
+        div.appendChild(chip);
+      });
+    }
+
+    messagesEl.appendChild(div);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+
+    // Highlight la carte recommandée
+    if (recommendId) highlightCard(recommendId);
+  }
+
+  function addUserMessage(text) {
+    const div = document.createElement('div');
+    div.className = 'msg user';
+    div.textContent = text;
+    messagesEl.appendChild(div);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function addTyping() {
+    const div = document.createElement('div');
+    div.className = 'msg typing';
+    div.id = 'typing-indicator';
+    div.textContent = '…';
+    messagesEl.appendChild(div);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+    return div;
+  }
+
+  function highlightCard(id) {
+    // Retire les highlights précédents
+    document.querySelectorAll('.card.ai-highlight').forEach(c => c.classList.remove('ai-highlight'));
+    const card = document.getElementById('card-' + id);
+    if (card) {
+      card.classList.add('ai-highlight');
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => card.classList.remove('ai-highlight'), 6000);
+    }
+  }
+
+  async function sendMsg(override) {
+    const text = override || inputEl.value.trim();
+    if (!text) return;
+    inputEl.value = '';
+
+    addUserMessage(text);
+    chatHistory.push({ role: 'user', content: text });
+
+    const typing = addTyping();
+
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: chatHistory })
+      });
+      const data = await res.json();
+      typing.remove();
+
+      if (data.error) {
+        addBotMessage("Oups, petit bug technique. Réessaie dans un instant !");
+        return;
+      }
+
+      chatHistory.push({ role: 'assistant', content: JSON.stringify(data) });
+      addBotMessage(data.message, data.recommend || null);
+
+    } catch (e) {
+      typing.remove();
+      addBotMessage("Connexion interrompue. Réessaie !");
+    }
+  }
+</script>
+
+</body>
+</html>
