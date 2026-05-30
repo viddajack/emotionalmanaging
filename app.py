@@ -3,7 +3,6 @@ EmotionalManaging · Flask Server
 Auteur : David Marchal
 Sons hébergés sur Cloudflare R2
 """
-
 from flask import Flask, render_template, jsonify
 import os
 
@@ -60,8 +59,8 @@ SOUNDS = [
     {
         "id": "assez_travaille_remastered",
         "filename": "assez_travaille_remastered.mp3",
-        "title": "Assez_Travaillé_remastered",
-        "tag": "Sonnerie · assez_travaille_Remastered",
+        "title": "Assez Travaillé",
+        "tag": "Sonnerie · Remastered",
         "desc": "Une composition ciselée note après note. Le résultat d'heures passées à équilibrer chaque détail.",
         "price": "0,99 €",
         "paypal": "https://paypal.me/DavidMarchal144/0.99",
@@ -69,28 +68,24 @@ SOUNDS = [
     {
         "id": "changeffect_remastered",
         "filename": "changeffect_remastered.mp3",
-        "title": "changeffect_remastered",
-        "tag": "Sonnerie · changeffect_remastered",
+        "title": "ChangEffect",
+        "tag": "Sonnerie · Effet x4",
         "desc": "Un effet sonore distinctif, remastérisé quatre fois pour une texture parfaite.",
         "price": "0,99 €",
         "paypal": "https://paypal.me/DavidMarchal144/0.99",
     },
 ]
 
-# Injecter l'URL complète R2 dans chaque son
 for s in SOUNDS:
     s["url"] = f"{R2_BASE}/{s['filename']}"
-
 
 @app.route("/")
 def index():
     return render_template("index.html", sounds=SOUNDS)
 
-
 @app.route("/api/sounds")
 def api_sounds():
     return jsonify(SOUNDS)
-
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
