@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lumina · IA empathique</title>
+<style>
+  :root{
+    --bg:#080a10; --bg2:#10131c; --ink:#eef1f7; --muted:#8b93a4;
+    --accent:#6db5ff; --accent2:#a78bfa; --glow:#3a7bd5; --line:#1e2330;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:system-ui,-apple-system,sans-serif;
+    background:radial-gradient(1000px 700px at 50% -20%,#161d33 0%,var(--bg) 60%);
+    color:var(--ink); min-height:100vh; line-height:1.6;
+  }
+  nav{
+    display:flex; gap:1.4rem; align-items:center; padding:1.1rem 1.6rem;
+    border-bottom:1px solid var(--line); position:sticky; top:0;
+    background:rgba(8,10,16,.85); backdrop-filter:blur(8px); z-index:10; flex-wrap:wrap;
+  }
+  nav a{color:var(--muted); text-decoration:none; font-size:.92rem; transition:color .2s}
+  nav a:hover,nav a.active{color:var(--accent)}
+  nav .brand{color:var(--ink); font-weight:700; font-size:1.05rem; margin-right:auto}
+  .wrap{max-width:720px; margin:0 auto; padding:3.4rem 1.6rem 5rem}
+  .halo{
+    width:90px; height:90px; border-radius:50%; margin:0 auto 1.6rem;
+    background:radial-gradient(circle at 35% 30%,var(--accent),var(--accent2) 70%);
+    box-shadow:0 0 60px var(--glow),0 0 120px rgba(110,181,255,.3);
+    animation:pulse 4s ease-in-out infinite;
+  }
+  @keyframes pulse{0%,100%{transform:scale(1);opacity:.95}50%{transform:scale(1.06);opacity:1}}
+  h1{font-size:clamp(2.2rem,7vw,3.4rem); text-align:center; font-weight:800;
+    background:linear-gradient(120deg,var(--accent),var(--accent2));
+    -webkit-background-clip:text; background-clip:text; color:transparent; margin-bottom:.5rem}
+  .tag{text-align:center; color:var(--muted); margin-bottom:2.8rem; font-size:1.05rem}
+  p{margin-bottom:1.2rem; color:#cdd3e0}
+  .card{
+    background:linear-gradient(160deg,var(--bg2),#0b0e15);
+    border:1px solid var(--line); border-radius:16px; padding:1.8rem; margin:1.6rem 0;
+  }
+  .card h3{font-size:1.25rem; margin-bottom:.4rem}
+  .price{font-size:2rem; font-weight:800; color:var(--accent); margin:.3rem 0 1rem}
+  .price small{font-size:.95rem; color:var(--muted); font-weight:500}
+  .btn{
+    width:100%; border:none; cursor:pointer; font-family:inherit; font-weight:700;
+    font-size:1rem; padding:1rem; border-radius:12px; color:#06101f;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    transition:transform .15s,box-shadow .2s;
+  }
+  .btn:hover{transform:translateY(-2px); box-shadow:0 12px 34px rgba(110,181,255,.35)}
+  .note{font-size:.82rem; color:var(--muted); margin-top:.9rem; text-align:center}
+  .hidden{display:none}
+  .reveal{
+    background:#0c1828; border:1px solid var(--accent); border-radius:12px;
+    padding:1.2rem; margin-top:1.2rem; text-align:center;
+  }
+  .reveal a{color:var(--accent); font-weight:700; font-size:1.15rem; text-decoration:none}
+  footer{text-align:center; color:var(--muted); font-size:.8rem;
+    padding:2rem; border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<nav>
+  <a class="brand" href="/">EmotionalManaging</a>
+  <a href="/">Sonneries</a>
+  <a href="/livre">Le Livre</a>
+  <a href="/lumina" class="active">Lumina</a>
+</nav>
+
+<div class="wrap">
+  <div class="halo"></div>
+  <h1>Lumina</h1>
+  <p class="tag">L'IA empathique & thérapeute — pensée pour écouter, apaiser, accompagner.</p>
+
+  <p>Lumina est une intelligence artificielle conçue autour de l'écoute et du
+  soutien émotionnel. Disponible à toute heure, elle offre un espace de parole
+  bienveillant pour réfléchir, déposer ses tensions et retrouver de la sérénité.</p>
+
+  <div class="card">
+    <h3>Accès à l'application</h3>
+    <div class="price">5 € <small>/ accès</small></div>
+    <p style="margin-bottom:1.2rem">Accès complet à Lumina sur tous tes appareils.</p>
+    <!-- Paiement PayPal direct -->
+    <a class="btn" style="display:block;text-align:center;text-decoration:none"
+       href="https://www.paypal.com/paypalme/davidmarchal144/5EUR" target="_blank" rel="noopener">
+       Payer 5 € avec PayPal
+    </a>
+    <p class="note">Paiement sécurisé via PayPal · davidmarchal144@gmail.com</p>
+  </div>
+
+  <div class="card">
+    <h3>Visio avec l'auteur</h3>
+    <div class="price">50 € <small>/ 30 min · via WhatsApp</small></div>
+    <p style="margin-bottom:1.2rem">Un échange privé en visioconférence de 30 minutes.
+    Après ton règlement, le numéro WhatsApp s'affiche pour convenir d'un rendez-vous.</p>
+    <a class="btn" style="display:block;text-align:center;text-decoration:none"
+       href="https://www.paypal.com/paypalme/davidmarchal144/50EUR" target="_blank" rel="noopener"
+       onclick="setTimeout(()=>document.getElementById('wa').classList.remove('hidden'),1500)">
+       Payer 50 € avec PayPal
+    </a>
+    <div id="wa" class="reveal hidden">
+      Une fois le paiement effectué, contacte-moi sur WhatsApp :<br>
+      <a href="https://wa.me/32470503290" target="_blank" rel="noopener">Ouvrir WhatsApp</a>
+    </div>
+    <p class="note">Le numéro reste masqué jusqu'au règlement.</p>
+  </div>
+</div>
+
+<footer>© 2026 David Marchal · Lumina &amp; HealEffect</footer>
+</body>
+</html>

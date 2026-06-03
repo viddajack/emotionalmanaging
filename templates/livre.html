@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le Livre · David Marchal</title>
+<style>
+  :root{
+    --bg:#0c0e13; --bg2:#13161f; --ink:#f3f1ea; --muted:#9aa0ad;
+    --accent:#c9a24b; --accent2:#e3c878; --line:#242a36;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:Georgia,'Times New Roman',serif;
+    background:radial-gradient(1200px 600px at 80% -10%,#1b2030 0%,var(--bg) 55%);
+    color:var(--ink); min-height:100vh; line-height:1.6;
+  }
+  nav{
+    display:flex; gap:1.4rem; align-items:center; padding:1.1rem 1.6rem;
+    border-bottom:1px solid var(--line); position:sticky; top:0;
+    background:rgba(12,14,19,.85); backdrop-filter:blur(8px); z-index:10;
+    flex-wrap:wrap;
+  }
+  nav a{color:var(--muted); text-decoration:none; font-family:system-ui,sans-serif;
+    font-size:.92rem; letter-spacing:.02em; transition:color .2s}
+  nav a:hover,nav a.active{color:var(--accent2)}
+  nav .brand{color:var(--ink); font-weight:600; font-size:1.05rem; margin-right:auto}
+  .wrap{max-width:760px; margin:0 auto; padding:3.2rem 1.6rem 5rem}
+  .eyebrow{font-family:system-ui,sans-serif; text-transform:uppercase;
+    letter-spacing:.22em; font-size:.72rem; color:var(--accent); margin-bottom:1rem}
+  h1{font-size:clamp(2rem,6vw,3.1rem); line-height:1.15; margin-bottom:.4rem; font-weight:400}
+  .sub{color:var(--muted); font-style:italic; margin-bottom:2.4rem; font-size:1.1rem}
+  .cover{
+    float:right; width:190px; margin:0 0 1.4rem 1.8rem;
+    aspect-ratio:13/20; border-radius:6px;
+    background:linear-gradient(135deg,#1d2330,#11141c);
+    border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center; text-align:center;
+    padding:1.2rem; box-shadow:0 20px 50px rgba(0,0,0,.45);
+  }
+  .cover span{font-size:.95rem; color:var(--accent2); line-height:1.4}
+  p{margin-bottom:1.2rem}
+  .meta{font-family:system-ui,sans-serif; font-size:.85rem; color:var(--muted);
+    border-top:1px solid var(--line); padding-top:1.4rem; margin-top:2rem; clear:both}
+  .meta b{color:var(--ink); font-weight:600}
+  .btns{display:flex; gap:1rem; flex-wrap:wrap; margin-top:2.4rem}
+  .btn{
+    font-family:system-ui,sans-serif; font-weight:600; font-size:.95rem;
+    text-decoration:none; padding:.95rem 1.6rem; border-radius:10px;
+    display:inline-flex; align-items:center; gap:.5rem; transition:transform .15s,box-shadow .2s;
+  }
+  .btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#1a1206}
+  .btn.ghost{border:1px solid var(--line); color:var(--ink); background:var(--bg2)}
+  .btn:hover{transform:translateY(-2px); box-shadow:0 10px 30px rgba(201,162,75,.25)}
+  footer{text-align:center; color:var(--muted); font-family:system-ui,sans-serif;
+    font-size:.8rem; padding:2rem; border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<nav>
+  <a class="brand" href="/">EmotionalManaging</a>
+  <a href="/">Sonneries</a>
+  <a href="/livre" class="active">Le Livre</a>
+  <a href="/lumina">Lumina</a>
+</nav>
+
+<div class="wrap">
+  <div class="eyebrow">Édilivre · 2021</div>
+  <div class="cover"><span>Sérénité<br>polyvalente</span></div>
+  <h1>Sérénité polyvalente</h1>
+  <p class="sub">ça existe dans le dictionnaire — David Marchal</p>
+
+  <p>Des connaissances basiques dans certains domaines permettent de faire
+  des analogies et d'en tirer profit pour mieux se guider — et se faire guider —
+  à travers les étapes de la vie : santé, informatique, et autres surprises
+  improvisées.</p>
+
+  <p>Si vous voulez exceller dans un domaine, il faut néanmoins s'y tenir.
+  Le choix vous appartient.</p>
+
+  <div class="meta">
+    <b>Éditeur</b> : Édilivre &nbsp;·&nbsp; <b>Parution</b> : 11 mai 2021 &nbsp;·&nbsp;
+    <b>Pages</b> : 44 &nbsp;·&nbsp; <b>ISBN</b> : 978-2414500826
+  </div>
+
+  <div class="btns">
+    <!-- ⚠️ Vérifie ce lien Edilivre avant publication -->
+    <a class="btn primary" href="https://www.edilivre.com/serenite-polyvalente-ca-existe-dans-le-dictionnaire-david-marchal.html" target="_blank" rel="noopener">Acheter sur Édilivre</a>
+    <a class="btn ghost" href="https://www.amazon.com/dp/2414500824" target="_blank" rel="noopener">Acheter sur Amazon</a>
+  </div>
+</div>
+
+<footer>© 2026 David Marchal · Tous droits réservés</footer>
+</body>
+</html>
