@@ -1,4 +1,7 @@
 """
+@app.route("/animaux")
+def animaux():
+    return render_template("animaux.html")
 EmotionalManaging · Flask Server
 Auteur : David Marchal
 Sons hébergés sur Cloudflare R2
